@@ -1,0 +1,32 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: quicksave-water-app:latest
+    container_name: quicksave-water-app
+    restart: unless-stopped
+    ports:
+      - "8005:8005"
+    environment:
+      APP_NAME: "QUICKSAVE AGENCIES LTD"
+      APP_ENV: production
+      APP_DEBUG: "false"
+      APP_URL: http://localhost:8005
+      APP_KEY: base64:5QtLA2F1ayhDepfIXQxvJWuKPwT5wgqPMg9HlC9NOl4=
+      DB_CONNECTION: sqlite
+      DB_DATABASE: /var/www/html/database/database.sqlite
+      SESSION_DRIVER: database
+      CACHE_STORE: database
+      QUEUE_CONNECTION: database
+      LOG_CHANNEL: stderr
+      SEED_ON_START: "false"
+    volumes:
+      - app-database:/var/www/html/database
+      - app-storage:/var/www/html/storage/app
+
+volumes:
+  app-database:
+    name: quicksave_database_data
+  app-storage:
+    name: quicksave_storage_data
